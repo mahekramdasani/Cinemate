@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- <div class="card mb-3">
+    <div class="row g-0">
+        <div>
+            <div class="card-body">
+                <h5 class="card-title">Login</h5>
+                {% if error %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <p class="card-text">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        Login
+                    </button>
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div> -->
+<section class="login">
+    <div class="container">
+      <div class="backImg">
+        {% load static %}
+        <img src="{% static 'images/account.jpg' %}" alt="" />
+        <div class="text">
+          <h3>Login</h3>
+          <h1>My account</h1>
+        </div>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <span>Username *</span>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          aria-describedby="emailHelp"
+          required
+        />
+        <span>Password *</span>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+        <button class="button">Login</button>
+      </form>
+    </div>
+  </section>
+{% endblock content %}

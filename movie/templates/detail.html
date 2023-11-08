@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            {% if movie.Poster != "N/A" %}
+            <img src="{{ movie.Poster }}" class="img-fluid rounded-start" alt="">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h1 class="card-title">{{ movie.Title }}</h1>
+                {% if movie.Plot != "N/A" %}
+                <p class="card-text"><strong>Plot:</strong>{{ movie.Plot }}</p>
+                {% endif %}
+                {% if movie.Year != "N/A" %}
+                <p class="card-text"><strong>Year:</strong>{{ movie.Year }}</p>
+                {% endif %}
+                {% if movie.Released != "N/A" %}
+                <p class="card-text"><strong>Released:</strong>{{ movie.Released }}</p>
+                {% endif %}
+                {% if movie.Runtime != "N/A" %}
+                <p class="card-text"><strong>Runtime:</strong>{{ movie.Runtime }}</p>
+                {% endif %}
+                {% if movie.Genre != "N/A" %}
+                <p class="card-text"><strong>Genre:</strong>{{ movie.Genre }}</p>
+                {% endif %}
+                {% if movie.Director != "N/A" %}
+                <p class="card-text"><strong>Director:</strong>{{ movie.Director }}</p>
+                {% endif %}
+                {% if movie.Writer != "N/A" %}
+                <p class="card-text"><strong>Writer:</strong>{{ movie.Writer }}</p>
+                {% endif %}
+                {% if movie.Actors != "N/A" %}
+                <p class="card-text"><strong>Actors:</strong>{{ movie.Actors }}</p>
+                {% endif %}
+                {% if movie.Language != "N/A" %}
+                <p class="card-text"><strong>Language:</strong>{{ movie.Language }}</p>
+                {% endif %}
+                {% if movie.Country != "N/A" %}
+                <p class="card-text"><strong>Country:</strong>{{ movie.Country }}</p>
+                {% endif %}
+                {% if movie.Awards != "N/A" %}
+                <p class="card-text"><strong>Awards:</strong>{{ movie.Awards }}</p>
+                {% endif %}
+                {% if movie.imdbRating != "N/A" %}
+                <p class="card-text"><strong>imdbRating:</strong>{{ movie.imdbRating }}</p>
+                {% endif %}
+                {% if movie.imdbVotes != "N/A" %}
+                <p class="card-text"><strong>imdbVotes:</strong>{{ movie.imdbVotes }}</p>
+                {% endif %}
+                <p class="card-text">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'createreview' movie.id %}" class="btn btn-primary">
+                        Add Review
+                    </a>
+                    {% endif %}
+                </p>
+            </div>
+            <hr />
+            <h3>Reviews</h3>
+            <ul class="list-group">
+                {% for review in reviews %}
+                <li class="list-group-item pb-3 pt-3">
+                    <h5 class="card-title">
+                        Review by {{ review.user.username }}
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{ review.date }}
+                    </h6>
+                    <p class="card-text">{{ review.text }}</p>
+                    {% if user.is_authenticated and user == review.user %}
+                    <a class="btn btn-primary me-2" href="{% url 'updatereview' review.id %}">Update</a>
+                    <a class="btn btn-danger" href="{% url 'deletereview' review.id %}">Delete</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+    </div>
+</div>
+</div>
+{% endblock content %}

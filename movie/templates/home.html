@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- <p className="search">
+    <input
+      type="text"
+      name="searchTerm"
+      placeholder="Search Movie by Title"
+    />
+    <button type="submit" class="button">Search</button>
+</p> -->
+{% if user.is_authenticated %}
+<form action="" class="search">
+    <div class="mb-3">
+        <label class="form-label">
+        <input type="text" name="searchMovie" class="form-control" placeholder="Search for Movie:"/></label>
+    <button type="submit" class="btn btn-primary button">
+        Search
+    </button>
+</div>
+</form>
+{% endif %}
+<div class="home row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for movie in movies %}
+    <div class="col col-md-4 col-lg-3">
+        <div class="card">
+            {% if movie.Poster != "N/A" %}
+            <img class="card-img-top" src="{{ movie.Poster }}" alt="{{ movie.Title }}" />
+            {% else %}
+            {% load static %}
+            <img src="{% static 'images/noimage.png' %}" alt="" class="card-img-top" />
+            {% endif %}
+            <div class="card-body">
+                {% if user.is_authenticated %}
+                <a href="{% url 'detail' movie.id %}">
+                    <h5 class="card-title fw-bold">{{ movie.Title }}</h5>
+                </a>
+                {% else %}
+                <h5 class="card-title fw-bold">{{ movie.Title }}</h5>
+                <small>Sign Up/Login to get the full description</small>
+                <p></p>
+                {% endif %}
+                {% if movie.Plot != "N/A" %}
+                <p class="card-text">{{ movie.Plot }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
